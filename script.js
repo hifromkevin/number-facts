@@ -11,12 +11,12 @@ function getFactAjax() {
 	let number = numberInput.value;
 	
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', `http://numbersapi.com/${number}`);
+	xhr.open('GET', `http://numbersapi.com/${number}/year`);
 
 	xhr.onload = function() {
 		if (this.status === 200 && number !== '') {
 			fact.style.display = 'block';
-			factText.innerHTML = this.responseText;
+			factText.innerHTML = 	'<h4 class="card-title">Number Fact</h4>' + this.responseText;
 		}
 	};
 
@@ -48,32 +48,52 @@ pokeButton.addEventListener('click', () => {
 	xhr.send();
 });
 
-randomUser.addEventListener('click', () => {
+// randomUser.addEventListener('click', () => {
+// 	fact.style.display = 'block';
+// 	let person = '';
+
+// 	let xhr = new XMLHttpRequest();
+//   xhr.open('GET', 'https://randomuser.me/api/');
+//   xhr.onload = function() {
+//   	if(this.status === 200) {
+//   		let parsedPerson = JSON.parse(this.responseText);
+//   		parsedPerson = parsedPerson.results[0];
+
+//   		let name = parsedPerson.name.first[0].toUpperCase().concat(parsedPerson.name.first.slice(1)) + ' ' + parsedPerson.name.last[0].toUpperCase().concat(parsedPerson.name.last.slice(1));
+//   		person += `<h1>${name}</h1>`;
+//   		person += `<img src="${parsedPerson.picture.large}" alt="name" class="personPhoto" />`;
+//   		person += `<p><strong>Cell Phone</strong>: ${parsedPerson.cell}</p>`;
+//   		person += `<p><strong>Email Address</strong>: ${parsedPerson.email}</p>`;
+//   		person += `<p><strong>Age</strong>: ${parsedPerson.dob.age}</p>`;
+//   	} else {
+//   		console.log('That ain\'t right...');
+//   	}
+
+//   	factText.innerHTML = person;
+//   };
+//   xhr.send();
+// });
+
+randomUser.addEventListener('click', getRandomUserFetch);
+
+function getRandomUserFetch() {
 	fact.style.display = 'block';
 	let person = '';
+	fetch('https://randomuser.me/api/')
+	.then(res => res.json()) // or res.text() if our response was text
+	.then(data => {
+		let parsedPerson = data.results[0];
 
-	let xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://randomuser.me/api/');
-  xhr.onload = function() {
-  	if(this.status === 200) {
-  		let parsedPerson = JSON.parse(this.responseText);
-  		parsedPerson = parsedPerson.results[0];
-
-  		let name = parsedPerson.name.first[0].toUpperCase().concat(parsedPerson.name.first.slice(1)) + ' ' + parsedPerson.name.last[0].toUpperCase().concat(parsedPerson.name.last.slice(1));
-  		person += `<h1>${name}</h1>`;
-  		person += `<img src="${parsedPerson.picture.large}" alt="name" class="personPhoto" />`;
-  		person += `<p><strong>Cell Phone</strong>: ${parsedPerson.cell}</p>`;
-  		person += `<p><strong>Email Address</strong>: ${parsedPerson.email}</p>`;
-  		person += `<p><strong>Age</strong>: ${parsedPerson.dob.age}</p>`;
-  	} else {
-  		console.log('That ain\'t right...');
-  	}
-
-  	factText.innerHTML = person;
-  };
-  xhr.send();
-});
-
-
+		let name = parsedPerson.name.first[0].toUpperCase().concat(parsedPerson.name.first.slice(1)) + ' ' + parsedPerson.name.last[0].toUpperCase().concat(parsedPerson.name.last.slice(1));
+		person += `<h1 class="personName mt-3">${name}</h1>`;
+		person += `<img src="${parsedPerson.picture.large}" alt="${name}" class="personPhoto" />`;
+		person += `<p><strong>Cell Phone</strong>: ${parsedPerson.cell}</p>`;
+		person += `<p><strong>Email Address</strong>: ${parsedPerson.email}</p>`;
+		person += `<p><strong>Age</strong>: ${parsedPerson.dob.age}</p>`;
+		console.log(person);
+		factText.innerHTML = person;
+	})
+	.catch(err => console.log(err));
+}
 
 
