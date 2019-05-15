@@ -13,7 +13,12 @@
 					<h1>Number Facts</h1>
 					<p>Enter a number and get a random fact</p>
 					<input type="text" class="form-control form-control-lg" id="numberInput" placeholder="Enter any number" />
-					<button type="button" id="pokeButton" class="btn btn-primary">Pokemon!</button>
+					<label for="numberType">Random number fact, or random year fact?<br />
+						<input type="radio" name="numberType" value="num">Number</label>
+						<input type="radio" name="numberType" value="year">Year</label>
+						<button type="button" id="numButton" class="btn btn-primary">Give Me a Random Fact About My Number!</button>
+					</label>
+					<button type="button" id="pokeButton" class="btn btn-primary">Or Give Me Pokemon by Pokedex Number!</button>
 					<button type="button" id="randomUser" class="btn btn-primary">Give Me a Random User</button>
 					<div id="fact" clas="card-body">
 						<div id="factText" class="card-text"></div>
