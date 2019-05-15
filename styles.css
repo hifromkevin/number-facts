@@ -2,6 +2,10 @@
 	display: none;
 }
 
+.personName {
+	text-align: center;
+}
+
 .personPhoto {
 	display: block;
 	margin: 0 auto;
